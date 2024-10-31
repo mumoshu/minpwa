@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <link rel="manifest" href="manifest.json" />
+    <!-- ... -->
+  </head>
+  <body>
+    <div>
+      <h1>Hello MinPWA</h1>
+
+      <script>
+        function sendImmediately() {
+          console.log('Button clicked');
+
+          fetch('/tasks', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              title: 'Task 1',
+              description: 'This is task 1',
+            }),
+          })
+            .then(function(response) {
+              return response.json();
+            })
+            .then(function(data) {
+              console.log('Success:', data);
+            })
+            .catch(function(error) {
+              console.error('Error:', error);
+            });
+        }
+
+        function sendLater() {
+          console.log('Sending later using extension');
+          // The extension ID can be found:
+          // - From chrome extensions page of chrome web store if it's published
+          // - From chrome://extensions/ page if it's not published
+          const STATIC_EXTENSION_ID = 'YOUR_EXTENSION_ID';
+          const callExtensionAPI = function (method) {
+            chrome.runtime.sendMessage(STATIC_EXTENSION_ID, {
+              methodName: method,
+              tasks: [
+                {
+                  title: 'Task 1',
+                  description: 'This is task 1',
+                },
+              ],
+            }).then((response)=> {
+              console.log('Response from extension:', response);
+            })
+            .catch((error)=> {
+              console.error('Error from extension:', error);
+            });
+          };
+          callExtensionAPI('send');
+        }
+      </script>
+
+      <button id="btn" onclick="sendImmediately()">Send Immediately</button>
+      <button id="btn" onclick="sendLater()">Send Later</button>
+    </div>
+    <!-- ... -->
+    <script>
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/sw.js')
+          .then(function(registration) {
+            console.log('Service Worker registered with scope:', registration.scope);
+          })
+          .catch(function(error) {
+            console.error('Service Worker registration failed:', error);
+          });
+      } else {
+        console.error('Service Worker is not supported in this browser.');
+      }
+    </script>
+  </body>
+</html>
