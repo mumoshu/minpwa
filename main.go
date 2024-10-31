@@ -12,7 +12,7 @@ import (
 func minpwaServer() {
 	log.Printf("Serving minpwa at http://localhost:8080")
 	http.Handle("/tasks", http.HandlerFunc(tasksHandler))
-	http.Handle("/", http.FileServer(http.Dir(".")))
+	http.Handle("/", http.FileServer(http.Dir("./web")))
 	http.ListenAndServe(":8080", nil)
 }
 
