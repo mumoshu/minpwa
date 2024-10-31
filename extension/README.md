@@ -8,6 +8,12 @@ https://chromeos.dev/en/kiosk/connecting-an-extension-from-a-kiosk-pwa
 
 To install this extension, browse chrome://extensions/ and enable Developer mode. Then click on Load unpacked and select the extension folder.
 
+To test the extension, click the extension icon in the Chrome toolbar. This will open a new tab with the extension's popup.html.
+
+You'll find a button labeled "Send Immediately". Clicking this button will send a message to the minpwa server listening on localhost:8080. The server will respond with a message that will be logged to the console.
+
+## Implementation notes
+
 Note that unlike the example in the link above, this extension does not specify:
 
 ```json

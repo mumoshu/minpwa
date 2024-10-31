@@ -6,6 +6,10 @@
     "background": {
       "service_worker": "background.js"
     },
+    "permissions": ["scripting", "activeTab", "tabs", "tabCapture", "storage", "cookies"],
+    "action": {
+      "default_title": "Click Me"
+    },
     "externally_connectable": {
       "accepts_tls_channel_id": false,
       "matches": [
